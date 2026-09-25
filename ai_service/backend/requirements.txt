@@ -7,4 +7,3 @@ asyncio
 edge-tts #Added
 requests
 cloudinary
-cachetools

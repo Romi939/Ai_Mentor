@@ -10,7 +10,6 @@ from fastapi import FastAPI, BackgroundTasks
 from fastapi.staticfiles import StaticFiles
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
-from cachetools import TTLCache
 import json
 from google import genai
 from groq import Groq
@@ -203,12 +202,7 @@ def generate_syllabus(data: SyllabusRequest):
 # Generate Lesson Endpoint
 # --------------------------
 
-JOB_STATUS_TTL = 60 * 60  # 1 hour
-
-job_status = TTLCache(
-    maxsize=1000,
-    ttl=JOB_STATUS_TTL
-)
+job_status = {}
 
 @app.post("/generate")
 def generate_lesson(data: LessonRequest, background_tasks: BackgroundTasks):
