@@ -20,6 +20,7 @@ from config import (
     CLOUDINARY_API_KEY,
     CLOUDINARY_API_SECRET,
 )
+from cachetools import TTLCache
 
 # --------------------------
 # Cloudinary Config
@@ -202,7 +203,7 @@ def generate_syllabus(data: SyllabusRequest):
 # Generate Lesson Endpoint
 # --------------------------
 
-job_status = {}
+job_status = TTLCache(maxsize=1000, ttl=3600)
 
 @app.post("/generate")
 def generate_lesson(data: LessonRequest, background_tasks: BackgroundTasks):
